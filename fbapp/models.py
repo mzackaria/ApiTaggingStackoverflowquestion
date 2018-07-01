@@ -8,7 +8,7 @@ from .get_result import lr, vectorizer, multilabel_binarizer
 from flask import Flask, jsonify, request
 import numpy as np
 import re
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup
 from nltk.corpus import stopwords    
 from nltk.stem.porter import PorterStemmer 
 
@@ -16,12 +16,25 @@ app = Flask(__name__)
     
 @app.route('/predict_tags', methods = ['GET'])
 def index():
+    #get the question from the request
     text = request.args.get('question')
+    
+    #clean the text
     review_cleaned = review_to_words(text)
+    
+    #vectorize the cleaned text
     review_vectorized = vectorizer.transform([review_cleaned]).toarray()
+    
+    #predict tags
     y_pred = lr.predict(review_vectorized).toarray()
+    
+    #add a 0 for the nan value
     x = np.insert(y_pred, 29, 0)
+    
+    #get the tags in text form
     tags_pred = multilabel_binarizer.inverse_transform(np.array(x).reshape(1,51))
+    
+    #reshape the array for response
     tags_pred = tags_pred[0]
     result = ''
     for tag in tags_pred:
@@ -36,7 +49,7 @@ def ind():
         return "hello"
     
     
-#defining the function that will be used to create the dictionnary
+#defining the funtion that will be used to create the dictionnary
 def review_to_words( raw_review ):
     # Function to convert a raw review to a string of words
     # The input is a single string (a raw movie review), and 
