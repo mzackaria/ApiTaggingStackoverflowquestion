@@ -35,3 +35,4 @@ SQLAlchemy==1.1.9
 statsmodels==0.8.0
 unicodecsv==0.14.1
 nltk==3.3
+scikit-multilearn==0.0.5
