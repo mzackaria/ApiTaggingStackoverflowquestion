@@ -73,7 +73,7 @@ def review_to_words( raw_review ):
     stops = set(stopwords.words("english"))                  
     # 
     # 6. Remove stop words
-    meaningful_words = [w for w in words if not w in stops]   
+    meaningful_words = [w for w in words if not w in stops]
     #
     # 7. Join the words back into one string separated by space, 
     # and return the result.
